@@ -7,3 +7,5 @@ export default class DatabaseService {
     return this.connection.doctor.findMany();
   }
 }
+
+export const database = new DatabaseService(new PrismaClient());

@@ -1,13 +1,14 @@
-import 'express-async-errors'
+import "express-async-errors";
 
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
+import DoctorControllerImpl from "@/application/controller/DoctorController";
 
 export default class Router {
   app: express.Express;
 
-  constructor() {
+  constructor(readonly doctorController: DoctorControllerImpl) {
     this.app = express();
     this.app.use(cors());
     this.app.use(helmet());
@@ -16,7 +17,9 @@ export default class Router {
     this.setRoutes();
   }
 
-  private setRoutes() {}
+  private setRoutes() {
+    this.app.get("/doctors", this.doctorController.listDoctor);
+  }
 
   public start(port: number) {
     this.app.listen(port, () => {
